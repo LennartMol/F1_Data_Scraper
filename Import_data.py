@@ -14,28 +14,30 @@ soup = BeautifulSoup(response.text, 'html.parser')
 tables = soup.find_all('table', {'class': 'wikitable'})
 
 def get_driver_names(tables):
-    driver_names = []
+    driver_info = []
+    driver_id = 0
     if year == 2024:
         table = tables[5]
     else:
         table = tables[6]
     rows = table.find_all('tr')
     for row in rows[1:]:  # Skipping the header row
+        cur_driver_info = {}
         data = row.find_all('td')
         if data:  # Check if there is data in the row
+            # give id to driver
+            cur_driver_info.update({'Driver_id': driver_id})
+            driver_id += 1
             driver_name = data[1].text.strip()  # Adjust the index if needed
-            driver_names.append(driver_name)
-    return driver_names
+            cur_driver_info.update({'Driver_name': driver_name})
+            driver_info.append(cur_driver_info)
+    return driver_info
 
-def get_driver_dob(driver_names):
-    # get driver date of birth and download foto. Use name with underscore for wikipedia search
-    # take a list of driver names and view wikipedia page for each driver
-    # example: for name of driver 'Max Verstappen' search https://nl.wikipedia.org/wiki/Max_Verstappen
-    # get date of birth and download foto
+def get_driver_dob(driver_info):
     
     base_url = "https://nl.wikipedia.org/wiki/" 
-    driver_info = []
-    for driver_name in driver_names:
+    for i in range(0, len(driver_info)):
+        driver_name = driver_info[i]['Driver_name'] 
         url = base_url + driver_name.replace(' ', '_')
         # wtf george russell and charles leclerc have a different page name
         if driver_name == 'George Russell' or driver_name == 'Charles Leclerc':
@@ -45,8 +47,6 @@ def get_driver_dob(driver_names):
 
         # Improved search for 'Geboren', using partial text match and ignoring case
         th = soup.find('th', text=lambda t: t and 'geboren' in t.lower())
-
-        driver_info_dict = {'name': driver_name}
 
         # Check if a matching th tag was found
         if th:
@@ -58,40 +58,35 @@ def get_driver_dob(driver_names):
                 year_start_pos = year_match.start()
                 # Cut the string to include everything up to the year
                 dob = dob_full_text[:year_start_pos+4]  # Include the year itself
-                driver_info_dict['dob'] = dob
-            else:
-                driver_info_dict['dob'] = 'Not found'
-        else:
-            driver_info_dict['dob'] = 'Not found'
-
-        driver_info.append(driver_info_dict)
-
+                driver_info[i].update({'Driver_date_of_birth': dob})
+                driver_info[i].update({'Driver_photo_path': 'media/'+driver_name.replace(' ', '_')+'.jpg'})
+    
     return driver_info
 
+def get_driver_info(tables):
+    names = get_driver_names(tables)
+    return get_driver_dob(names)
+
+
 def save_driver_info_to_csv():
-    # convert to .csv files
-    df = pd.DataFrame(get_driver_dob(get_driver_names(tables)), columns=['name', 'dob'])
-
-    # Specify the file path for the CSV file
-    # get current working directory
-    cwd = os.getcwd()
+    df = pd.DataFrame(get_driver_info(tables), columns=['Driver_id', 'Driver_name', 'Driver_date_of_birth', 'Driver_photo_path'])
     if year == 2024:
-        file_path = os.path.join(cwd, 'f1_drivers_dob_2024.csv')
+        file_path = os.path.join(os.getcwd(), 'f1_driver_info_2024.csv')
     else:    
-        file_path = os.path.join(cwd, 'f1_drivers_dob_2023.csv')
-
-    # Save the DataFrame to a CSV file
-
+        file_path = os.path.join(os.getcwd(), 'f1_drivers_info_2023.csv')
     df.to_csv(file_path, index=False)
 
-def get_GP_info(tables):
+def get_GP_basic_info(tables):
     table = tables[0]
     GP_info = []
+    GP_id = 0
     rows = table.find_all('tr')
     for row in rows[1:]:  # Skipping the header row
         cur_GP_info = {}
         data = row.find_all('td')
         if data:  # Check if there is data in the row
+            cur_GP_info.update({'GP_id': GP_id})
+            GP_id += 1
             GP_nr = data[0].text.strip()  # GP number
             cur_GP_info.update({'GP_nr': GP_nr})
             GP_country = data[1].text.strip()  # GP country
@@ -143,21 +138,18 @@ def get_GP_country(GP_info):
         GP_info[i].update({'GP_country': value_in_next_column})
     return GP_info
 
+def get_GP_info(tables):
+    GP_info = get_GP_basic_info(tables)
+    GP_info = get_GP_length(GP_info)
+    return get_GP_country(GP_info)
+
 def save_GP_info_to_csv():
-    # convert to .csv files
-    df = pd.DataFrame(get_GP_country(get_GP_length(get_GP_info(tables))), columns=['GP_nr', 'GP_country', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
-
-    # Specify the file path for the CSV file
-    # get current working directory
-    cwd = os.getcwd()
+    df = pd.DataFrame(get_GP_info(tables), columns=['GP_id', 'GP_nr', 'GP_country', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
     if year == 2024:
-        file_path = os.path.join(cwd, 'f1_GP_info_2024.csv')
+        file_path = os.path.join(os.getcwd(), 'f1_GP_info_2024.csv')
     else:    
-        file_path = os.path.join(cwd, 'f1_GP_info_2023.csv')
-
-    # Save the DataFrame to a CSV file
-
+        file_path = os.path.join(os.getcwd(), 'f1_GP_info_2023.csv')
     df.to_csv(file_path, index=False)
 
-save_GP_info_to_csv()
-#save_driver_info_to_csv()
+#save_GP_info_to_csv()
+save_driver_info_to_csv()
