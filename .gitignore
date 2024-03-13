@@ -161,4 +161,4 @@ cython_debug/
 
 
 # Generated .csv files
-.csv
+*.csv
