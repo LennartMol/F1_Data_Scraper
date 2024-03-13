@@ -4,7 +4,7 @@ import pandas as pd
 import re
 import os
 
-year = 2024
+year = 2023
 url = "https://nl.wikipedia.org/wiki/Formule_1_in_" + str(year)
 
 response = requests.get(url)
@@ -87,12 +87,12 @@ def get_GP_basic_info(tables):
         if data:  # Check if there is data in the row
             cur_GP_info.update({'GP_id': GP_id})
             GP_id += 1
-            GP_nr = data[0].text.strip()  # GP number
-            cur_GP_info.update({'GP_nr': GP_nr})
             GP_country = data[1].text.strip()  # GP country
             # remve 'GP van ' from GP_country
             GP_country = re.sub(r'GP van ', '', GP_country)
-            cur_GP_info.update({'GP_country': GP_country})
+            cur_GP_info.update({'GP_country_id': GP_country})
+            GP_nr = data[0].text.strip()  # GP number
+            cur_GP_info.update({'GP_nr': GP_nr})
             GP_circuit = data[2].text.strip()  # GP Circuit name
             cur_GP_info.update({'GP_circuit': GP_circuit})
             GP_place = data[3].text.strip() # GP place
@@ -127,15 +127,18 @@ def get_GP_length(GP_info):
     return GP_info
     
 def get_GP_country(GP_info):
-    # get GP country name and download foto. Use name with underscore for wikipedia search
+    # get GP country name. Use name with underscore for wikipedia search
     base_url = "https://nl.wikipedia.org/wiki/Grand_Prix_Formule_1_van_"
     for i in range(0, len(GP_info)):
-        url = base_url + GP_info[i]['GP_country'].replace(' ', '_')
+        url = base_url + GP_info[i]['GP_country_id'].replace(' ', '_')
         response = requests.get(url)
         df = pd.read_html(response.text, match='Land')[0]
         row_index = df[df.columns[0]].eq('Land').idxmax()
         value_in_next_column = df.iloc[row_index, df.columns.get_loc(df.columns[1]) + 1]
-        GP_info[i].update({'GP_country': value_in_next_column})
+        GP_info[i].update({'GP_country_id': value_in_next_column})
+
+        # for now all countries_IDs are not set yet
+        GP_info[i].update({'GP_country_id': 'Not set yet'})
     return GP_info
 
 def get_GP_info(tables):
@@ -144,7 +147,7 @@ def get_GP_info(tables):
     return get_GP_country(GP_info)
 
 def save_GP_info_to_csv():
-    df = pd.DataFrame(get_GP_info(tables), columns=['GP_id', 'GP_nr', 'GP_country', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
+    df = pd.DataFrame(get_GP_info(tables), columns=['GP_id', 'GP_country_id', 'GP_nr', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
     if year == 2024:
         file_path = os.path.join(os.getcwd(), 'f1_GP_info_2024.csv')
     else:    
@@ -152,23 +155,29 @@ def save_GP_info_to_csv():
     df.to_csv(file_path, index=False)
 
 def get_country_info(tables):
-    GP_info = get_GP_basic_info(tables)
+    base_url = "https://nl.wikipedia.org/wiki/Grand_Prix_Formule_1_van_"
     Country_info = []
     Country_id = 0
-    # get GP country name and download foto. Use name with underscore for wikipedia search
-    base_url = "https://nl.wikipedia.org/wiki/Grand_Prix_Formule_1_van_"
-    for i in range(0, len(GP_info)):
-        cur_country_info = {}
-        cur_country_info.update({'Country_id': Country_id})
-        Country_id += 1
-        url = base_url + GP_info[i]['GP_country'].replace(' ', '_')
-        response = requests.get(url)
-        df = pd.read_html(response.text, match='Land')[0]
-        row_index = df[df.columns[0]].eq('Land').idxmax()
-        value_in_next_column = df.iloc[row_index, df.columns.get_loc(df.columns[1]) + 1]
-        cur_country_info.update({'Country_name': value_in_next_column})
-        cur_country_info.update({'Country_photo_path': 'media/'+value_in_next_column.replace(' ', '_')+'.PNG'})
-        Country_info.append(cur_country_info)
+    
+    table = tables[0]
+    rows = table.find_all('tr')
+    for row in rows[1:]:  # Skipping the header row
+        data = row.find_all('td')
+        if data:  # Check if there is data in the row
+            countr_name_raw = data[1].text.strip()  # GP country
+            # remve 'GP van ' from GP_country
+            country_name_for_search = re.sub(r'GP van ', '', countr_name_raw)
+            cur_country_info = {}
+            cur_country_info.update({'Country_id': Country_id})
+            Country_id += 1
+            url = base_url + country_name_for_search.replace(' ', '_')
+            response = requests.get(url)
+            df = pd.read_html(response.text, match='Land')[0]
+            row_index = df[df.columns[0]].eq('Land').idxmax()
+            value_in_next_column = df.iloc[row_index, df.columns.get_loc(df.columns[1]) + 1]
+            cur_country_info.update({'Country_name': value_in_next_column})
+            cur_country_info.update({'Country_photo_path': 'media/'+value_in_next_column.replace(' ', '_')+'.PNG'})
+            Country_info.append(cur_country_info)
     return Country_info
 
 def save_country_info_to_csv():
@@ -177,8 +186,8 @@ def save_country_info_to_csv():
         file_path = os.path.join(os.getcwd(), 'f1_country_info_2024.csv')
     else:    
         file_path = os.path.join(os.getcwd(), 'f1_country_info_2023.csv')
-    df.to_csv(file_path, index=False)
+    df.to_csv(file_path, index=False) 
 
 #save_GP_info_to_csv()
 #save_driver_info_to_csv()
-save_country_info_to_csv()
+#save_country_info_to_csv()
