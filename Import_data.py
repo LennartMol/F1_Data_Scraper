@@ -94,6 +94,10 @@ def get_GP_info(tables):
         if data:  # Check if there is data in the row
             GP_nr = data[0].text.strip()  # GP number
             cur_GP_info.update({'GP_nr': GP_nr})
+            GP_country = data[1].text.strip()  # GP country
+            # remve 'GP van ' from GP_country
+            GP_country = re.sub(r'GP van ', '', GP_country)
+            cur_GP_info.update({'GP_country': GP_country})
             GP_circuit = data[2].text.strip()  # GP Circuit name
             cur_GP_info.update({'GP_circuit': GP_circuit})
             GP_place = data[3].text.strip() # GP place
@@ -129,7 +133,7 @@ def get_GP_length(GP_info):
     
 def save_GP_info_to_csv():
     # convert to .csv files
-    df = pd.DataFrame(get_GP_length(get_GP_info(tables)), columns=['GP_nr', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
+    df = pd.DataFrame(get_GP_length(get_GP_info(tables)), columns=['GP_nr', 'GP_country', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
 
     # Specify the file path for the CSV file
     # get current working directory
