@@ -131,9 +131,21 @@ def get_GP_length(GP_info):
             GP_info[i].update({'GP_length': 'Not found'})
     return GP_info
     
+def get_GP_country(GP_info):
+    # get GP country name and download foto. Use name with underscore for wikipedia search
+    base_url = "https://nl.wikipedia.org/wiki/Grand_Prix_Formule_1_van_"
+    for i in range(0, len(GP_info)):
+        url = base_url + GP_info[i]['GP_country'].replace(' ', '_')
+        response = requests.get(url)
+        df = pd.read_html(response.text, match='Land')[0]
+        row_index = df[df.columns[0]].eq('Land').idxmax()
+        value_in_next_column = df.iloc[row_index, df.columns.get_loc(df.columns[1]) + 1]
+        GP_info[i].update({'GP_country': value_in_next_column})
+    return GP_info
+
 def save_GP_info_to_csv():
     # convert to .csv files
-    df = pd.DataFrame(get_GP_length(get_GP_info(tables)), columns=['GP_nr', 'GP_country', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
+    df = pd.DataFrame(get_GP_country(get_GP_length(get_GP_info(tables))), columns=['GP_nr', 'GP_country', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
 
     # Specify the file path for the CSV file
     # get current working directory
