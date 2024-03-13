@@ -151,5 +151,34 @@ def save_GP_info_to_csv():
         file_path = os.path.join(os.getcwd(), 'f1_GP_info_2023.csv')
     df.to_csv(file_path, index=False)
 
+def get_country_info(tables):
+    GP_info = get_GP_basic_info(tables)
+    Country_info = []
+    Country_id = 0
+    # get GP country name and download foto. Use name with underscore for wikipedia search
+    base_url = "https://nl.wikipedia.org/wiki/Grand_Prix_Formule_1_van_"
+    for i in range(0, len(GP_info)):
+        cur_country_info = {}
+        cur_country_info.update({'Country_id': Country_id})
+        Country_id += 1
+        url = base_url + GP_info[i]['GP_country'].replace(' ', '_')
+        response = requests.get(url)
+        df = pd.read_html(response.text, match='Land')[0]
+        row_index = df[df.columns[0]].eq('Land').idxmax()
+        value_in_next_column = df.iloc[row_index, df.columns.get_loc(df.columns[1]) + 1]
+        cur_country_info.update({'Country_name': value_in_next_column})
+        cur_country_info.update({'Country_photo_path': 'media/'+value_in_next_column.replace(' ', '_')+'.PNG'})
+        Country_info.append(cur_country_info)
+    return Country_info
+
+def save_country_info_to_csv():
+    df = pd.DataFrame(get_country_info(tables), columns=['Country_id', 'Country_name', 'Country_photo_path'])
+    if year == 2024:
+        file_path = os.path.join(os.getcwd(), 'f1_country_info_2024.csv')
+    else:    
+        file_path = os.path.join(os.getcwd(), 'f1_country_info_2023.csv')
+    df.to_csv(file_path, index=False)
+
 #save_GP_info_to_csv()
-save_driver_info_to_csv()
+#save_driver_info_to_csv()
+save_country_info_to_csv()
