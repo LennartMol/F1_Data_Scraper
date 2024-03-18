@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import re
 import os
+import math
 
 class Import_data_class():
 
@@ -207,15 +208,16 @@ class Import_data_class():
         response = requests.get(url)
         df = pd.read_html(response.text, match='Coureur')[3]
         df_Coureur = df['Coureur']
-        current_status_info = {}
         for i in range(0, len(df_Coureur)):
-            
             status = df.loc[i]
             status = status.drop(['Pos.', 'Nr.', 'Coureur', 'Punten']) # remove crap
+            status = status.dropna() # remove NaN
             for j in range(0, len(status)):
+                current_status_info = {}
                 current_status_info.update({'Driver': df_Coureur.loc[i, 'Coureur']})
                 current_status_info.update({'GP': status.index[j][1]})
                 cur_status = status.values[j]
+                current_status_info.update({'Status': 'Null'})
                 if 'NC' in cur_status:
                     current_status_info.update({'Status': 'NC'})
                     cur_status = cur_status.replace('NC', '')
@@ -250,7 +252,12 @@ class Import_data_class():
                     current_status_info.update({'Pole_position': False})
 
                 Status_info.append(current_status_info)
-            print(Status_info)
-        
-        test = 1
+        return Status_info
 
+    def save_status_info_to_csv(self):
+        df = pd.DataFrame(self.get_status(), columns=['Driver', 'GP', 'Status', 'Fastest_lap', 'Pole_position'])
+        if self.year == 2024:
+            file_path = os.path.join(os.getcwd(), 'f1_status_info_2024.csv')
+        else:    
+            file_path = os.path.join(os.getcwd(), 'f1_status_info_2023.csv')
+        df.to_csv(file_path, index=False)

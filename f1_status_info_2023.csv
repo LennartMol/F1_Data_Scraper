@@ -1,0 +1,486 @@
+Driver,GP,Status,Fastest_lap,Pole_position
+Max Verstappen,BHR,Null,False,True
+Max Verstappen,SAU,Null,True,False
+Max Verstappen,AUS,Null,False,True
+Max Verstappen,AZE,Null,False,False
+Max Verstappen,MIA,Null,True,False
+Max Verstappen,MON,Null,False,True
+Max Verstappen,SPA,Null,True,True
+Max Verstappen,CAN,Null,False,True
+Max Verstappen,OOS,Null,True,True
+Max Verstappen,GBR,Null,True,True
+Max Verstappen,HON,Null,True,False
+Max Verstappen,BEL,Null,False,False
+Max Verstappen,NED,Null,False,True
+Max Verstappen,ITA,Null,False,False
+Max Verstappen,SIN,Null,False,False
+Max Verstappen,JPN,Null,True,True
+Max Verstappen,QAT,Null,True,True
+Max Verstappen,VST,Null,False,False
+Max Verstappen,MXS,Null,False,False
+Max Verstappen,SAP,Null,False,True
+Max Verstappen,LSV,Null,False,False
+Max Verstappen,ABU,Null,True,True
+Sergio Pérez,BHR,Null,False,False
+Sergio Pérez,SAU,Null,False,True
+Sergio Pérez,AUS,Null,True,False
+Sergio Pérez,AZE,Null,False,False
+Sergio Pérez,MIA,Null,False,True
+Sergio Pérez,MON,Null,False,False
+Sergio Pérez,SPA,Null,False,False
+Sergio Pérez,CAN,Null,True,False
+Sergio Pérez,OOS,Null,False,False
+Sergio Pérez,GBR,Null,False,False
+Sergio Pérez,HON,Null,False,False
+Sergio Pérez,BEL,Null,False,False
+Sergio Pérez,NED,Null,False,False
+Sergio Pérez,ITA,Null,False,False
+Sergio Pérez,SIN,Null,False,False
+Sergio Pérez,JPN,DNF,False,False
+Sergio Pérez,QAT,Null,False,False
+Sergio Pérez,VST,Null,False,False
+Sergio Pérez,MXS,DNF,False,False
+Sergio Pérez,SAP,Null,False,False
+Sergio Pérez,LSV,Null,False,False
+Sergio Pérez,ABU,Null,False,False
+Lewis Hamilton,BHR,Null,False,False
+Lewis Hamilton,SAU,Null,False,False
+Lewis Hamilton,AUS,Null,False,False
+Lewis Hamilton,AZE,Null,False,False
+Lewis Hamilton,MIA,Null,False,False
+Lewis Hamilton,MON,Null,True,False
+Lewis Hamilton,SPA,Null,False,False
+Lewis Hamilton,CAN,Null,False,False
+Lewis Hamilton,OOS,Null,False,False
+Lewis Hamilton,GBR,Null,False,False
+Lewis Hamilton,HON,Null,False,True
+Lewis Hamilton,BEL,Null,True,False
+Lewis Hamilton,NED,Null,False,False
+Lewis Hamilton,ITA,Null,False,False
+Lewis Hamilton,SIN,Null,True,False
+Lewis Hamilton,JPN,Null,False,False
+Lewis Hamilton,QAT,DNF,False,False
+Lewis Hamilton,VST,DSQ,False,False
+Lewis Hamilton,MXS,Null,True,False
+Lewis Hamilton,SAP,Null,False,False
+Lewis Hamilton,LSV,Null,False,False
+Lewis Hamilton,ABU,Null,False,False
+Fernando Alonso,BHR,Null,False,False
+Fernando Alonso,SAU,Null,False,False
+Fernando Alonso,AUS,Null,False,False
+Fernando Alonso,AZE,Null,False,False
+Fernando Alonso,MIA,Null,False,False
+Fernando Alonso,MON,Null,False,False
+Fernando Alonso,SPA,Null,False,False
+Fernando Alonso,CAN,Null,False,False
+Fernando Alonso,OOS,Null,False,False
+Fernando Alonso,GBR,Null,False,False
+Fernando Alonso,HON,Null,False,False
+Fernando Alonso,BEL,Null,False,False
+Fernando Alonso,NED,Null,True,False
+Fernando Alonso,ITA,Null,False,False
+Fernando Alonso,SIN,Null,False,False
+Fernando Alonso,JPN,Null,False,False
+Fernando Alonso,QAT,Null,False,False
+Fernando Alonso,VST,DNF,False,False
+Fernando Alonso,MXS,DNF,False,False
+Fernando Alonso,SAP,Null,False,False
+Fernando Alonso,LSV,Null,False,False
+Fernando Alonso,ABU,Null,False,False
+Charles Leclerc,BHR,DNF,False,False
+Charles Leclerc,SAU,Null,False,False
+Charles Leclerc,AUS,DNF,False,False
+Charles Leclerc,AZE,Null,False,True
+Charles Leclerc,MIA,Null,False,False
+Charles Leclerc,MON,Null,False,False
+Charles Leclerc,SPA,Null,False,False
+Charles Leclerc,CAN,Null,False,False
+Charles Leclerc,OOS,Null,False,False
+Charles Leclerc,GBR,Null,False,False
+Charles Leclerc,HON,Null,False,False
+Charles Leclerc,BEL,Null,False,True
+Charles Leclerc,NED,DNF,False,False
+Charles Leclerc,ITA,Null,False,False
+Charles Leclerc,SIN,Null,False,False
+Charles Leclerc,JPN,Null,False,False
+Charles Leclerc,QAT,Null,False,False
+Charles Leclerc,VST,DSQ,False,True
+Charles Leclerc,MXS,Null,False,True
+Charles Leclerc,SAP,DNS,False,False
+Charles Leclerc,LSV,Null,False,True
+Charles Leclerc,ABU,Null,False,False
+Lando Norris,BHR,Null,False,False
+Lando Norris,SAU,Null,False,False
+Lando Norris,AUS,Null,False,False
+Lando Norris,AZE,Null,False,False
+Lando Norris,MIA,Null,False,False
+Lando Norris,MON,Null,False,False
+Lando Norris,SPA,Null,False,False
+Lando Norris,CAN,Null,False,False
+Lando Norris,OOS,Null,False,False
+Lando Norris,GBR,Null,False,False
+Lando Norris,HON,Null,False,False
+Lando Norris,BEL,Null,False,False
+Lando Norris,NED,Null,False,False
+Lando Norris,ITA,Null,False,False
+Lando Norris,SIN,Null,False,False
+Lando Norris,JPN,Null,False,False
+Lando Norris,QAT,Null,False,False
+Lando Norris,VST,Null,False,False
+Lando Norris,MXS,Null,False,False
+Lando Norris,SAP,Null,True,False
+Lando Norris,LSV,DNF,False,False
+Lando Norris,ABU,Null,False,False
+Carlos Sainz jr.,BHR,Null,False,False
+Carlos Sainz jr.,SAU,Null,False,False
+Carlos Sainz jr.,AUS,Null,False,False
+Carlos Sainz jr.,AZE,Null,False,False
+Carlos Sainz jr.,MIA,Null,False,False
+Carlos Sainz jr.,MON,Null,False,False
+Carlos Sainz jr.,SPA,Null,False,False
+Carlos Sainz jr.,CAN,Null,False,False
+Carlos Sainz jr.,OOS,Null,False,False
+Carlos Sainz jr.,GBR,Null,False,False
+Carlos Sainz jr.,HON,Null,False,False
+Carlos Sainz jr.,BEL,DNF,False,False
+Carlos Sainz jr.,NED,Null,False,False
+Carlos Sainz jr.,ITA,Null,False,True
+Carlos Sainz jr.,SIN,Null,False,True
+Carlos Sainz jr.,JPN,Null,False,False
+Carlos Sainz jr.,QAT,DNS,False,False
+Carlos Sainz jr.,VST,Null,False,False
+Carlos Sainz jr.,MXS,Null,False,False
+Carlos Sainz jr.,SAP,Null,False,False
+Carlos Sainz jr.,LSV,Null,False,False
+Carlos Sainz jr.,ABU,Null,False,False
+George Russell,BHR,Null,False,False
+George Russell,SAU,Null,False,False
+George Russell,AUS,DNF,False,False
+George Russell,AZE,Null,True,False
+George Russell,MIA,Null,False,False
+George Russell,MON,Null,False,False
+George Russell,SPA,Null,False,False
+George Russell,CAN,DNF,False,False
+George Russell,OOS,Null,False,False
+George Russell,GBR,Null,False,False
+George Russell,HON,Null,False,False
+George Russell,BEL,Null,False,False
+George Russell,NED,Null,False,False
+George Russell,ITA,Null,False,False
+George Russell,SIN,Null,False,False
+George Russell,JPN,Null,False,False
+George Russell,QAT,Null,False,False
+George Russell,VST,Null,False,False
+George Russell,MXS,Null,False,False
+George Russell,SAP,DNF,False,False
+George Russell,LSV,Null,False,False
+George Russell,ABU,Null,False,False
+Oscar Piastri,BHR,DNF,False,False
+Oscar Piastri,SAU,Null,False,False
+Oscar Piastri,AUS,Null,False,False
+Oscar Piastri,AZE,Null,False,False
+Oscar Piastri,MIA,Null,False,False
+Oscar Piastri,MON,Null,False,False
+Oscar Piastri,SPA,Null,False,False
+Oscar Piastri,CAN,Null,False,False
+Oscar Piastri,OOS,Null,False,False
+Oscar Piastri,GBR,Null,False,False
+Oscar Piastri,HON,Null,False,False
+Oscar Piastri,BEL,DNF,False,False
+Oscar Piastri,NED,Null,False,False
+Oscar Piastri,ITA,Null,True,False
+Oscar Piastri,SIN,Null,False,False
+Oscar Piastri,JPN,Null,False,False
+Oscar Piastri,QAT,Null,False,False
+Oscar Piastri,VST,DNF,False,False
+Oscar Piastri,MXS,Null,False,False
+Oscar Piastri,SAP,Null,False,False
+Oscar Piastri,LSV,Null,True,False
+Oscar Piastri,ABU,Null,False,False
+Lance Stroll,BHR,Null,False,False
+Lance Stroll,SAU,DNF,False,False
+Lance Stroll,AUS,Null,False,False
+Lance Stroll,AZE,Null,False,False
+Lance Stroll,MIA,Null,False,False
+Lance Stroll,MON,DNF,False,False
+Lance Stroll,SPA,Null,False,False
+Lance Stroll,CAN,Null,False,False
+Lance Stroll,OOS,Null,False,False
+Lance Stroll,GBR,Null,False,False
+Lance Stroll,HON,Null,False,False
+Lance Stroll,BEL,Null,False,False
+Lance Stroll,NED,Null,False,False
+Lance Stroll,ITA,Null,False,False
+Lance Stroll,SIN,WD,False,False
+Lance Stroll,JPN,DNF,False,False
+Lance Stroll,QAT,Null,False,False
+Lance Stroll,VST,Null,False,False
+Lance Stroll,MXS,Null,False,False
+Lance Stroll,SAP,Null,False,False
+Lance Stroll,LSV,Null,False,False
+Lance Stroll,ABU,Null,False,False
+Pierre Gasly,BHR,Null,False,False
+Pierre Gasly,SAU,Null,False,False
+Pierre Gasly,AUS,Null,False,False
+Pierre Gasly,AZE,Null,False,False
+Pierre Gasly,MIA,Null,False,False
+Pierre Gasly,MON,Null,False,False
+Pierre Gasly,SPA,Null,False,False
+Pierre Gasly,CAN,Null,False,False
+Pierre Gasly,OOS,Null,False,False
+Pierre Gasly,GBR,Null,False,False
+Pierre Gasly,HON,DNF,False,False
+Pierre Gasly,BEL,Null,False,False
+Pierre Gasly,NED,Null,False,False
+Pierre Gasly,ITA,Null,False,False
+Pierre Gasly,SIN,Null,False,False
+Pierre Gasly,JPN,Null,False,False
+Pierre Gasly,QAT,Null,False,False
+Pierre Gasly,VST,Null,False,False
+Pierre Gasly,MXS,Null,False,False
+Pierre Gasly,SAP,Null,False,False
+Pierre Gasly,LSV,Null,False,False
+Pierre Gasly,ABU,Null,False,False
+Esteban Ocon,BHR,DNF,False,False
+Esteban Ocon,SAU,Null,False,False
+Esteban Ocon,AUS,Null,False,False
+Esteban Ocon,AZE,Null,False,False
+Esteban Ocon,MIA,Null,False,False
+Esteban Ocon,MON,Null,False,False
+Esteban Ocon,SPA,Null,False,False
+Esteban Ocon,CAN,Null,False,False
+Esteban Ocon,OOS,Null,False,False
+Esteban Ocon,GBR,DNF,False,False
+Esteban Ocon,HON,DNF,False,False
+Esteban Ocon,BEL,Null,False,False
+Esteban Ocon,NED,Null,False,False
+Esteban Ocon,ITA,DNF,False,False
+Esteban Ocon,SIN,DNF,False,False
+Esteban Ocon,JPN,Null,False,False
+Esteban Ocon,QAT,Null,False,False
+Esteban Ocon,VST,DNF,False,False
+Esteban Ocon,MXS,Null,False,False
+Esteban Ocon,SAP,Null,False,False
+Esteban Ocon,LSV,Null,False,False
+Esteban Ocon,ABU,Null,False,False
+Alexander Albon,BHR,Null,False,False
+Alexander Albon,SAU,DNF,False,False
+Alexander Albon,AUS,DNF,False,False
+Alexander Albon,AZE,Null,False,False
+Alexander Albon,MIA,Null,False,False
+Alexander Albon,MON,Null,False,False
+Alexander Albon,SPA,Null,False,False
+Alexander Albon,CAN,Null,False,False
+Alexander Albon,OOS,Null,False,False
+Alexander Albon,GBR,Null,False,False
+Alexander Albon,HON,Null,False,False
+Alexander Albon,BEL,Null,False,False
+Alexander Albon,NED,Null,False,False
+Alexander Albon,ITA,Null,False,False
+Alexander Albon,SIN,Null,False,False
+Alexander Albon,JPN,DNF,False,False
+Alexander Albon,QAT,Null,False,False
+Alexander Albon,VST,Null,False,False
+Alexander Albon,MXS,Null,False,False
+Alexander Albon,SAP,DNF,False,False
+Alexander Albon,LSV,Null,False,False
+Alexander Albon,ABU,Null,False,False
+Yuki Tsunoda,BHR,Null,False,False
+Yuki Tsunoda,SAU,Null,False,False
+Yuki Tsunoda,AUS,Null,False,False
+Yuki Tsunoda,AZE,Null,False,False
+Yuki Tsunoda,MIA,Null,False,False
+Yuki Tsunoda,MON,Null,False,False
+Yuki Tsunoda,SPA,Null,False,False
+Yuki Tsunoda,CAN,Null,False,False
+Yuki Tsunoda,OOS,Null,False,False
+Yuki Tsunoda,GBR,Null,False,False
+Yuki Tsunoda,HON,Null,False,False
+Yuki Tsunoda,BEL,Null,False,False
+Yuki Tsunoda,NED,Null,False,False
+Yuki Tsunoda,ITA,DNS,False,False
+Yuki Tsunoda,SIN,DNF,False,False
+Yuki Tsunoda,JPN,Null,False,False
+Yuki Tsunoda,QAT,Null,False,False
+Yuki Tsunoda,VST,Null,True,False
+Yuki Tsunoda,MXS,Null,False,False
+Yuki Tsunoda,SAP,Null,False,False
+Yuki Tsunoda,LSV,Null,False,False
+Yuki Tsunoda,ABU,Null,False,False
+Valtteri Bottas,BHR,Null,False,False
+Valtteri Bottas,SAU,Null,False,False
+Valtteri Bottas,AUS,Null,False,False
+Valtteri Bottas,AZE,Null,False,False
+Valtteri Bottas,MIA,Null,False,False
+Valtteri Bottas,MON,Null,False,False
+Valtteri Bottas,SPA,Null,False,False
+Valtteri Bottas,CAN,Null,False,False
+Valtteri Bottas,OOS,Null,False,False
+Valtteri Bottas,GBR,Null,False,False
+Valtteri Bottas,HON,Null,False,False
+Valtteri Bottas,BEL,Null,False,False
+Valtteri Bottas,NED,Null,False,False
+Valtteri Bottas,ITA,Null,False,False
+Valtteri Bottas,SIN,DNF,False,False
+Valtteri Bottas,JPN,DNF,False,False
+Valtteri Bottas,QAT,Null,False,False
+Valtteri Bottas,VST,Null,False,False
+Valtteri Bottas,MXS,Null,False,False
+Valtteri Bottas,SAP,DNF,False,False
+Valtteri Bottas,LSV,Null,False,False
+Valtteri Bottas,ABU,Null,False,False
+Nico Hülkenberg,BHR,Null,False,False
+Nico Hülkenberg,SAU,Null,False,False
+Nico Hülkenberg,AUS,Null,False,False
+Nico Hülkenberg,AZE,Null,False,False
+Nico Hülkenberg,MIA,Null,False,False
+Nico Hülkenberg,MON,Null,False,False
+Nico Hülkenberg,SPA,Null,False,False
+Nico Hülkenberg,CAN,Null,False,False
+Nico Hülkenberg,OOS,DNF,False,False
+Nico Hülkenberg,GBR,Null,False,False
+Nico Hülkenberg,HON,Null,False,False
+Nico Hülkenberg,BEL,Null,False,False
+Nico Hülkenberg,NED,Null,False,False
+Nico Hülkenberg,ITA,Null,False,False
+Nico Hülkenberg,SIN,Null,False,False
+Nico Hülkenberg,JPN,Null,False,False
+Nico Hülkenberg,QAT,Null,False,False
+Nico Hülkenberg,VST,Null,False,False
+Nico Hülkenberg,MXS,Null,False,False
+Nico Hülkenberg,SAP,Null,False,False
+Nico Hülkenberg,LSV,Null,False,False
+Nico Hülkenberg,ABU,Null,False,False
+Daniel Ricciardo,HON,Null,False,False
+Daniel Ricciardo,BEL,Null,False,False
+Daniel Ricciardo,NED,WD,False,False
+Daniel Ricciardo,VST,Null,False,False
+Daniel Ricciardo,MXS,Null,False,False
+Daniel Ricciardo,SAP,Null,False,False
+Daniel Ricciardo,LSV,Null,False,False
+Daniel Ricciardo,ABU,Null,False,False
+Zhou Guanyu,BHR,Null,True,False
+Zhou Guanyu,SAU,Null,False,False
+Zhou Guanyu,AUS,Null,False,False
+Zhou Guanyu,AZE,DNF,False,False
+Zhou Guanyu,MIA,Null,False,False
+Zhou Guanyu,MON,Null,False,False
+Zhou Guanyu,SPA,Null,False,False
+Zhou Guanyu,CAN,Null,False,False
+Zhou Guanyu,OOS,Null,False,False
+Zhou Guanyu,GBR,Null,False,False
+Zhou Guanyu,HON,Null,False,False
+Zhou Guanyu,BEL,Null,False,False
+Zhou Guanyu,NED,DNF,False,False
+Zhou Guanyu,ITA,Null,False,False
+Zhou Guanyu,SIN,Null,False,False
+Zhou Guanyu,JPN,Null,False,False
+Zhou Guanyu,QAT,Null,False,False
+Zhou Guanyu,VST,Null,False,False
+Zhou Guanyu,MXS,Null,False,False
+Zhou Guanyu,SAP,DNF,False,False
+Zhou Guanyu,LSV,Null,False,False
+Zhou Guanyu,ABU,Null,False,False
+Kevin Magnussen,BHR,Null,False,False
+Kevin Magnussen,SAU,Null,False,False
+Kevin Magnussen,AUS,Null,False,False
+Kevin Magnussen,AZE,Null,False,False
+Kevin Magnussen,MIA,Null,False,False
+Kevin Magnussen,MON,Null,False,False
+Kevin Magnussen,SPA,Null,False,False
+Kevin Magnussen,CAN,Null,False,False
+Kevin Magnussen,OOS,Null,False,False
+Kevin Magnussen,GBR,DNF,False,False
+Kevin Magnussen,HON,Null,False,False
+Kevin Magnussen,BEL,Null,False,False
+Kevin Magnussen,NED,Null,False,False
+Kevin Magnussen,ITA,Null,False,False
+Kevin Magnussen,SIN,Null,False,False
+Kevin Magnussen,JPN,Null,False,False
+Kevin Magnussen,QAT,Null,False,False
+Kevin Magnussen,VST,Null,False,False
+Kevin Magnussen,MXS,DNF,False,False
+Kevin Magnussen,SAP,DNF,False,False
+Kevin Magnussen,LSV,Null,False,False
+Kevin Magnussen,ABU,Null,False,False
+Liam Lawson,NED,Null,False,False
+Liam Lawson,ITA,Null,False,False
+Liam Lawson,SIN,Null,False,False
+Liam Lawson,JPN,Null,False,False
+Liam Lawson,QAT,Null,False,False
+Logan Sargeant,BHR,Null,False,False
+Logan Sargeant,SAU,Null,False,False
+Logan Sargeant,AUS,Null,False,False
+Logan Sargeant,AZE,Null,False,False
+Logan Sargeant,MIA,Null,False,False
+Logan Sargeant,MON,Null,False,False
+Logan Sargeant,SPA,Null,False,False
+Logan Sargeant,CAN,DNF,False,False
+Logan Sargeant,OOS,Null,False,False
+Logan Sargeant,GBR,Null,False,False
+Logan Sargeant,HON,Null,False,False
+Logan Sargeant,BEL,Null,False,False
+Logan Sargeant,NED,DNF,False,False
+Logan Sargeant,ITA,Null,False,False
+Logan Sargeant,SIN,Null,False,False
+Logan Sargeant,JPN,DNF,False,False
+Logan Sargeant,QAT,DNF,False,False
+Logan Sargeant,VST,Null,False,False
+Logan Sargeant,MXS,Null,False,False
+Logan Sargeant,SAP,Null,False,False
+Logan Sargeant,LSV,Null,False,False
+Logan Sargeant,ABU,Null,False,False
+Nyck de Vries,BHR,Null,False,False
+Nyck de Vries,SAU,Null,False,False
+Nyck de Vries,AUS,Null,False,False
+Nyck de Vries,AZE,DNF,False,False
+Nyck de Vries,MIA,Null,False,False
+Nyck de Vries,MON,Null,False,False
+Nyck de Vries,SPA,Null,False,False
+Nyck de Vries,CAN,Null,False,False
+Nyck de Vries,OOS,Null,False,False
+Nyck de Vries,GBR,Null,False,False
+Coureur,BHR,Null,False,False
+Coureur,SAU,Null,True,False
+Coureur,AUS,Null,True,False
+Coureur,AZE,Null,False,False
+Coureur,MIA,Null,False,False
+Coureur,MON,Null,False,False
+Coureur,SPA,Null,True,True
+Coureur,CAN,Null,False,False
+Coureur,OOS,Null,True,False
+Coureur,GBR,Null,False,False
+Coureur,HON,Null,False,False
+Coureur,BEL,Null,False,False
+Coureur,NED,Null,False,False
+Coureur,ITA,Null,False,False
+Coureur,SIN,Null,True,False
+Coureur,JPN,Null,False,True
+Coureur,QAT,Null,False,False
+Coureur,VST,Null,True,False
+Coureur,MXS,Null,True,False
+Coureur,SAP,Null,True,True
+Coureur,LSV,Null,True,False
+Coureur,ABU,Null,False,False
+Coureur,BHR,Null,False,True
+Coureur,SAU,Null,False,True
+Coureur,AUS,Null,False,True
+Coureur,AZE,Null,False,True
+Coureur,MIA,Null,False,True
+Coureur,MON,Null,False,True
+Coureur,SPA,Null,False,True
+Coureur,CAN,Null,False,True
+Coureur,OOS,Null,False,True
+Coureur,GBR,Null,False,True
+Coureur,HON,Null,False,True
+Coureur,BEL,Null,False,True
+Coureur,NED,Null,False,True
+Coureur,ITA,Null,False,True
+Coureur,SIN,Null,False,True
+Coureur,JPN,Null,False,True
+Coureur,QAT,Null,False,True
+Coureur,VST,Null,False,True
+Coureur,MXS,Null,False,True
+Coureur,SAP,Null,False,True
+Coureur,LSV,Null,False,True
+Coureur,ABU,Null,False,True
