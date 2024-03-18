@@ -196,3 +196,61 @@ class Import_data_class():
         else:    
             file_path = os.path.join(os.getcwd(), 'f1_country_info_2023.csv')
         df.to_csv(file_path, index=False) 
+
+
+    def get_status(self):
+        base_url = "https://nl.wikipedia.org/wiki/Formule_1_in_"
+        url = base_url + str(self.year)
+
+        Status_info = []
+
+        response = requests.get(url)
+        df = pd.read_html(response.text, match='Coureur')[3]
+        df_Coureur = df['Coureur']
+        current_status_info = {}
+        for i in range(0, len(df_Coureur)):
+            
+            status = df.loc[i]
+            status = status.drop(['Pos.', 'Nr.', 'Coureur', 'Punten']) # remove crap
+            for j in range(0, len(status)):
+                current_status_info.update({'Driver': df_Coureur.loc[i, 'Coureur']})
+                current_status_info.update({'GP': status.index[j][1]})
+                cur_status = status.values[j]
+                if 'NC' in cur_status:
+                    current_status_info.update({'Status': 'NC'})
+                    cur_status = cur_status.replace('NC', '')
+                if 'DNF' in cur_status:
+                    current_status_info.update({'Status': 'DNF'})
+                    cur_status = cur_status.replace('DNF', '')
+                if 'DNQ' in cur_status:
+                    current_status_info.update({'Status': 'DNQ'})
+                    cur_status = cur_status.replace('DNQ', '')
+                if 'DSQ' in cur_status:
+                    current_status_info.update({'Status': 'DSQ'})
+                    cur_status = cur_status.replace('DSQ', '')
+                if 'DNS' in cur_status:
+                    current_status_info.update({'Status': 'DNS'})
+                    cur_status = cur_status.replace('DNS', '')
+                if 'EX' in cur_status:
+                    current_status_info.update({'Status': 'EX'})
+                    cur_status = cur_status.replace('EX', '')
+                if 'WD' in cur_status:
+                    current_status_info.update({'Status': 'WD'})
+                    cur_status = cur_status.replace('WD', '')
+                
+                if 'S' in cur_status:
+                    current_status_info.update({'Fastest_lap': True})
+                    cur_status = cur_status.replace('S', '')
+                else:
+                    current_status_info.update({'Fastest_lap': False})
+                if 'P' in cur_status:
+                    current_status_info.update({'Pole_position': True})
+                    cur_status = cur_status.replace('P', '')
+                else:
+                    current_status_info.update({'Pole_position': False})
+
+                Status_info.append(current_status_info)
+            print(Status_info)
+        
+        test = 1
+
