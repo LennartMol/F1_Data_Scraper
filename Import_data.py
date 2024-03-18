@@ -98,7 +98,7 @@ class Import_data_class():
                 cur_GP_info.update({'GP_id': GP_id})
                 GP_id += 1
                 GP_country = data[1].text.strip()  # GP country
-                # remve 'GP van ' from GP_country
+                # remove 'GP van ' from GP_country
                 GP_country = re.sub(r'GP van ', '', GP_country)
                 cur_GP_info.update({'GP_country_id': GP_country})
                 GP_nr = data[0].text.strip()  # GP number
@@ -148,7 +148,7 @@ class Import_data_class():
             GP_info[i].update({'GP_country_id': value_in_next_column})
 
             # for now all countries_IDs are not set yet
-            GP_info[i].update({'GP_country_id': 'Not set yet'})
+            #GP_info[i].update({'GP_country_id': 'Not set yet'})
         return GP_info
 
     def get_GP_info(self):
