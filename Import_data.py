@@ -157,7 +157,7 @@ class Import_data_class():
         return self.get_GP_country(GP_info)
 
     def save_GP_info_to_csv(self):
-        df = pd.DataFrame(self.get_GP_info(self.tables), columns=['GP_id', 'GP_country_id', 'GP_nr', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
+        df = pd.DataFrame(self.get_GP_info(), columns=['GP_id', 'GP_country_id', 'GP_nr', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
         if self.year == 2024:
             file_path = os.path.join(os.getcwd(), 'f1_GP_info_2024.csv')
         else:    
@@ -210,6 +210,7 @@ class Import_data_class():
         df_Coureur = df['Coureur']
         for i in range(0, len(df_Coureur)):
             status = df.loc[i]
+            status = status.sort_index()
             status = status.drop(['Pos.', 'Nr.', 'Coureur', 'Punten']) # remove crap
             status = status.dropna() # remove NaN
             for j in range(0, len(status)):
