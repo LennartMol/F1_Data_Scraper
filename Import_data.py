@@ -198,7 +198,6 @@ class Import_data_class():
             file_path = os.path.join(os.getcwd(), 'f1_country_info_2023.csv')
         df.to_csv(file_path, index=False) 
 
-
     def get_status(self):
         base_url = "https://nl.wikipedia.org/wiki/Formule_1_in_"
         url = base_url + str(self.year)
