@@ -98,7 +98,7 @@ class Import_data_class():
     def save_driver_info_to_csv(self):
         df = pd.DataFrame(self.get_driver_info(), columns=['Driver_id', 'Driver_function', 'Driver_name', 'Driver_date_of_birth'])
         if self.year == 2024:
-            file_path = os.path.join(os.getcwd(), 'f1_driver_info_2024.csv')
+            file_path = os.path.join(os.getcwd(), 'f1_drivers_info_2024.csv')
         else:    
             file_path = os.path.join(os.getcwd(), 'f1_drivers_info_2023.csv')
         df.to_csv(file_path, index=False)

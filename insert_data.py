@@ -105,6 +105,16 @@ class database_connection():
                     continue
                 drivers.append((row[1], row[2], row[3]))
 
+        with open('f1_drivers_info_2024.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[0] == 'driver_id':
+                    continue
+                drivers.append((row[1], row[2], row[3]))
+
+        # remove duplicates
+        drivers = list(set(drivers))
+
         function_ids = self.get_function_ids()
 
         for driver in drivers:
@@ -142,6 +152,43 @@ class database_connection():
         self.cursor.executemany(query, country_tuple)
         #self.mydb.commit()
 
+    def insert_driver_countries(self):
+
+        country_ids = self.get_country_ids()
+        driver_ids = self.get_driver_ids()
+
+        query = "INSERT INTO land_driver (land_id, driver_id) VALUES (%s, %s)"
+
+        driver_countries = []
+        driver_countries_ids = []
+
+        with open('f1_country_of_driver_2023.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[1] == 'Country_of_driver':
+                    continue
+                driver_countries.append((row[0], row[1]))
+        
+        with open('f1_country_of_driver_2024.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[1] == 'Country_of_driver':
+                    continue
+                driver_countries.append((row[0], row[1]))
+        
+        # remove duplicates
+        driver_countries = list(set(driver_countries))
+        test = 1        
+
+        for driver_country in driver_countries:
+            driver_id = next((number for number, name in driver_ids if name == driver_country[0]), None)
+            country_id = next((number for number, name in country_ids if name == driver_country[1]), None)
+            # update driver_countries_ids with the driver_id and country_id
+            driver_countries_ids.append((country_id, driver_id))
+
+        self.cursor.executemany(query, driver_countries_ids)
+        self.mydb.commit()
+
     def get_countries(self):
         query = "SELECT * FROM land"
         self.cursor.execute(query)
@@ -162,12 +209,18 @@ class database_connection():
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def get_driver_ids(self):
+        query = "SELECT id, name FROM driver"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
     def insert_all_data(self):
         self.insert_countries()
         self.insert_GPs()
         self.insert_functions()
         self.insert_drivers_info()
+        self.insert_driver_countries()
 
 db_con = database_connection()
 
-db_con.insert_countries()
+db_con.insert_driver_countries()
