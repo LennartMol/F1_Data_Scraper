@@ -71,19 +71,30 @@ class database_connection():
         self.cursor.executemany(query, functions)
         self.mydb.commit()
 
-    def insert_driver_info(self):
-        query = "INSERT INTO coureur (function_id, name, dateofbirth) VALUES (%s, %s, %s)"
+    def insert_drivers_info(self):
+        query = "INSERT INTO driver (function_id, name, dateofbirth) VALUES (%s, %s, %s)"
 
         drivers = []
+        drivers_ids = []
 
-        with open('f1_driver_info_2023.csv', newline='', encoding='utf-8') as file:
+        with open('f1_drivers_info_2023.csv', newline='', encoding='utf-8') as file:
             csv_data = csv.reader(file)
             for row in csv_data:
                 if row[0] == 'driver_id':
                     continue
                 drivers.append((row[1], row[2], row[3]))
 
-        test = 1
+        function_ids = self.get_function_ids()
+
+        for driver in drivers:
+            for function in function_ids:
+                if driver[0] == function[1]:
+                    driver = (function[0],) + driver[1:]
+                    drivers_ids.append(driver)
+                    break
+        
+        self.cursor.executemany(query, drivers_ids)
+        self.mydb.commit()
 
     def insert_countries_scraper(self):
         # deprecated
@@ -130,12 +141,11 @@ class database_connection():
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def insert_all_data(self):
+        self.insert_countries()
+        self.insert_GPs()
+        self.insert_functions()
+        self.insert_drivers_info()
+
 db_con = database_connection()
 
-db_con.insert_functions()
-
-#db_con.insert_GPs()
-#print(db_con.get_GPs())
-
-#db_con.insert_countries()
-#print(db_con.get_countries())
