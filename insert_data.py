@@ -24,7 +24,28 @@ class database_connection():
                 if row[1] == 'Country_name':
                     continue
                 countries.append((row[1],))
+
+        with open('f1_country_of_driver_2023.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[1] == 'Country_of_driver':
+                    continue
+                countries.append((row[1],))
         
+        with open('f1_country_info_2024.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[1] == 'Country_name':
+                    continue
+                countries.append((row[1],))
+        
+        with open('f1_country_of_driver_2024.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[1] == 'Country_of_driver':
+                    continue
+                countries.append((row[1],))
+
         # remove duplicates
         countries = list(set(countries))
 
@@ -149,3 +170,4 @@ class database_connection():
 
 db_con = database_connection()
 
+db_con.insert_countries()

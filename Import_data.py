@@ -312,3 +312,52 @@ class Import_data_class():
         else:    
             file_path = os.path.join(os.getcwd(), 'f1_status_info_2023.csv')
         df.to_csv(file_path, index=False)
+
+    def get_country_of_driver(self, driver_info):
+
+        country_of_driver = []
+
+        base_url = "https://nl.wikipedia.org/wiki/" 
+        for i in range(0, len(driver_info)):
+            current_country_of_driver = {}
+            second_current_country_of_driver = {}
+            driver_name = driver_info[i]['Driver_name'] 
+            current_country_of_driver.update({'Driver_name': driver_name})
+            url = base_url + driver_name.replace(' ', '_')
+            # wtf george russell and charles leclerc have a different page name
+            if driver_name == 'George Russell' or driver_name == 'Charles Leclerc':
+                url = url + '_(autocoureur)'
+            response = requests.get(url)
+            df = pd.read_html(response.text, match='Nationaliteit')[0]
+            row_index = df[df.columns[0]].eq('Nationaliteit').idxmax()
+            value_in_next_column = df.iloc[row_index, df.columns.get_loc(df.columns[1]) + 1]
+            # check if string contains 'xa0' and split it into two values
+            check_for_xa0 = value_in_next_column.find(u'\xa0')
+            if value_in_next_column == 'Verenigd Koninkrijk België':
+                value_in_next_column = 'Verenigd Koninkrijk '+u'\xa0'+ 'België'
+                check_for_xa0 = 1
+            if check_for_xa0 != -1:
+                first_value_in_next_column = value_in_next_column.split(u'\xa0')[0]
+                # remove trailing whitespace
+                first_value_in_next_column = first_value_in_next_column.rstrip()
+                current_country_of_driver.update({'Country_of_driver': first_value_in_next_column})
+                country_of_driver.append(current_country_of_driver)
+
+                second_current_country_of_driver.update({'Driver_name': driver_name})
+                second_value_in_next_column = value_in_next_column.split(u'\xa0')[1]
+                second_value_in_next_column = second_value_in_next_column.replace(u'\xa0', '')
+                second_current_country_of_driver.update({'Country_of_driver': second_value_in_next_column})
+                country_of_driver.append(second_current_country_of_driver)
+            else:
+                current_country_of_driver.update({'Country_of_driver': value_in_next_column})
+                country_of_driver.append(current_country_of_driver)
+
+        return country_of_driver
+
+    def save_country_of_driver_to_csv(self):
+        df = pd.DataFrame(self.get_country_of_driver(self.get_driver_info()), columns=['Driver_name', 'Country_of_driver'])
+        if self.year == 2024:
+            file_path = os.path.join(os.getcwd(), 'f1_country_of_driver_2024.csv')
+        else:    
+            file_path = os.path.join(os.getcwd(), 'f1_country_of_driver_2023.csv')
+        df.to_csv(file_path, index=False)

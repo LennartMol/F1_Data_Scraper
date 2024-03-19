@@ -1,11 +1,11 @@
 import Import_data
 
-debug = True
+debug = False
 
 def main():
     if debug:
         data = Import_data.Import_data_class(2023)
-        data.save_driver_info_to_csv()
+        data.save_country_of_driver_to_csv()
     else:
         input_year = input("Enter the year for which you want to import data: ")
         data = Import_data.Import_data_class(int(input_year))
@@ -25,6 +25,7 @@ def main():
                 data.save_driver_info_to_csv()
                 data.save_GP_info_to_csv()
                 data.save_country_info_to_csv()
+                data.save_country_of_driver_to_csv()
             elif(user_input == "5"):
                 input_year = input("Enter the year for which you want to import data: ")
                 data.change_year(int(input_year))
