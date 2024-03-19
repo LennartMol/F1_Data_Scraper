@@ -2,6 +2,7 @@ import mysql.connector
 import Import_data
 import csv
 
+
 class database_connection():
     def __init__(self):
         self.mydb = mysql.connector.connect(
@@ -12,12 +13,12 @@ class database_connection():
             )
         self.cursor = self.mydb.cursor()
 
-    def insert_countries_csv(self):
+    def insert_countries(self):
         query = "INSERT INTO land (name) VALUES (%s)"
 
         countries = []
 
-        with open('f1_country_info_2023.csv', 'r') as file:
+        with open('f1_country_info_2023.csv', newline='', encoding='utf-8') as file:
             csv_data = csv.reader(file)
             for row in csv_data:
                 if row[1] == 'Country_name':
@@ -27,7 +28,44 @@ class database_connection():
         self.cursor.executemany(query, countries)
         self.mydb.commit()
 
+    def insert_GPs(self):
+        query = "INSERT INTO GP (land_id, gp_number, circuit_name, location, date, length) VALUES (%s, %s, %s, %s, %s, %s)"
+
+        GPs = []
+        GPs_ids = []
+
+        with open('f1_GP_info_2023.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[0] == 'GP_id':
+                    continue
+                GPs.append((row[1], row[2], row[3], row[4], row[5], row[6]))
+
+        # print all GPs on new lines
+        #for GP in GPs:
+        #    print(GP)
+
+        country_ids = self.get_country_ids()
+
+        # replace all country names with country ids in GPs
+        for GP in GPs:
+            for country in country_ids:
+                if GP[0] == country[1]:
+                    GP = (country[0],) + GP[1:]
+                    GPs_ids.append(GP)
+                    break
+        
+        # print all GPs on new lines
+        #for GP in GPs_ids:
+        #    print(GP)
+
+
+        self.cursor.executemany(query, GPs)
+        self.mydb.commit()
+
+
     def insert_countries_scraper(self):
+        # deprecated
         query = "INSERT INTO land (name) VALUES (%s)"
 
         countries = []
@@ -49,14 +87,27 @@ class database_connection():
             country_tuple.append((countries[i],))
 
         self.cursor.executemany(query, country_tuple)
-        self.mydb.commit()
+        #self.mydb.commit()
 
     def get_countries(self):
         query = "SELECT * FROM land"
         self.cursor.execute(query)
         return self.cursor.fetchall()
+    
+    def get_country_ids(self):
+        query = "SELECT id, name FROM land"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
+    def get_GPs(self):
+        query = "SELECT * FROM GP"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 
 db_con = database_connection()
 
-db_con.insert_countries_scraper()
-print(db_con.get_countries())
+db_con.insert_GPs()
+print(db_con.get_GPs())
+
+#db_con.insert_countries()
+#print(db_con.get_countries())
