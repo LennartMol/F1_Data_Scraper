@@ -239,6 +239,8 @@ class Import_data_class():
                 cur_country_info.update({'Country_name': value_in_next_column})
                 cur_country_info.update({'Country_photo_path': 'media/'+value_in_next_column.replace(' ', '_')+'.PNG'})
                 Country_info.append(cur_country_info)
+        one_off_country = {'Country_id': 1000, 'Country_name': 'Zwitserland', 'Country_photo_path': 'media/Zwitserland.PNG'}
+        Country_info.append(one_off_country)
         return Country_info
 
     def save_country_info_to_csv(self):

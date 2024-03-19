@@ -189,6 +189,76 @@ class database_connection():
         self.cursor.executemany(query, driver_countries_ids)
         self.mydb.commit()
 
+    def insert_constructors(self):
+
+        query = "INSERT INTO constructor (land_id, name) VALUES (%s, %s)"
+
+        country_ids = self.get_country_ids()
+
+        constructors = []
+        constructors_ids = []
+
+        with open('f1_constructor_info_2023.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[0] == 'constructor_id':
+                    continue
+                constructors.append((row[1],row[3],))
+        
+        with open('f1_constructor_info_2024.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[0] == 'constructor_id':
+                    continue
+                constructors.append((row[1],row[3],))
+
+        # remove duplicates
+        constructors = list(set(constructors))
+
+        for constructor in constructors:
+            country_id = next((number for number, name in country_ids if name == constructor[0]), None)
+            constructors_ids.append((country_id, constructor[1]))
+
+        self.cursor.executemany(query, constructors_ids)
+        self.mydb.commit()
+
+    def insert_constructor_driver(self):
+    
+            query = "INSERT INTO constructor_driver (driver_id, constructor_id) VALUES (%s, %s)"
+    
+            constructor_ids = self.get_constructor_ids()
+            driver_ids = self.get_driver_ids()
+    
+            constructor_driver = []
+            constructor_driver_ids = []
+    
+            with open('f1_constructor_driver_2023.csv', newline='') as file:
+                csv_data = csv.reader(file)
+                for row in csv_data:
+                    if row[0] == 'constructor_name':
+                        continue
+                    constructor_driver.append((row[0], row[1]))
+            
+            with open('f1_constructor_driver_2024.csv', newline='') as file:
+                csv_data = csv.reader(file)
+                for row in csv_data:
+                    if row[0] == 'constructor_name':
+                        continue
+                    constructor_driver.append((row[0], row[1]))
+    
+            # remove duplicates
+            constructor_driver = list(set(constructor_driver))
+    
+            for cd in constructor_driver:
+                constructor_id = next((number for number, name in constructor_ids if name == cd[0]), None)
+                driver_id = next((number for number, name in driver_ids if name == cd[1]), None)
+                constructor_driver_ids.append((driver_id, constructor_id))
+
+            self.cursor.executemany(query, constructor_driver_ids)
+            self.mydb.commit()
+    
+            
+
     def get_countries(self):
         query = "SELECT * FROM land"
         self.cursor.execute(query)
@@ -214,13 +284,21 @@ class database_connection():
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def get_constructor_ids(self):
+        query = "SELECT id, name FROM constructor"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
+    
     def insert_all_data(self):
         self.insert_countries()
         self.insert_GPs()
         self.insert_functions()
         self.insert_drivers_info()
         self.insert_driver_countries()
+        self.insert_constructors()
+        self.insert_constructor_driver()
 
 db_con = database_connection()
 
-db_con.insert_driver_countries()
+db_con.insert_all_data()
