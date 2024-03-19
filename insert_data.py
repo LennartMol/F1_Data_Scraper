@@ -33,7 +33,7 @@ class database_connection():
 
     def insert_GPs(self):
         query = "INSERT INTO GP (land_id, gp_number, circuit_name, location, date, length) VALUES (%s, %s, %s, %s, %s, %s)"
-        
+
         # INSERT INTO GP (land_id, gp_number, circuit_name, location, date, length) VALUES (38, '1080', 'Bahrain International Circuit', 'Sakhir', '2023-03-05', '5412')
 
         GPs = []
@@ -60,6 +60,30 @@ class database_connection():
         self.cursor.executemany(query, GPs_ids)
         self.mydb.commit()
 
+    def insert_functions(self):
+        query = "INSERT INTO function (name) VALUES (%s)"
+
+        functions = [
+            ('coureur',),
+            ('testcoureur',),
+        ]
+
+        self.cursor.executemany(query, functions)
+        self.mydb.commit()
+
+    def insert_driver_info(self):
+        query = "INSERT INTO coureur (function_id, name, dateofbirth) VALUES (%s, %s, %s)"
+
+        drivers = []
+
+        with open('f1_driver_info_2023.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[0] == 'driver_id':
+                    continue
+                drivers.append((row[1], row[2], row[3]))
+
+        test = 1
 
     def insert_countries_scraper(self):
         # deprecated
@@ -101,10 +125,17 @@ class database_connection():
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def get_function_ids(self):
+        query = "SELECT id, name FROM function"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
 db_con = database_connection()
 
-db_con.insert_GPs()
-print(db_con.get_GPs())
+db_con.insert_functions()
+
+#db_con.insert_GPs()
+#print(db_con.get_GPs())
 
 #db_con.insert_countries()
 #print(db_con.get_countries())

@@ -39,6 +39,8 @@ class Import_data_class():
                 # give id to driver
                 cur_driver_info.update({'Driver_id': driver_id})
                 driver_id += 1
+                driver_function = 'coureur'
+                cur_driver_info.update({'Driver_function': driver_function})
                 driver_name = data[1].text.strip()  # Adjust the index if needed
                 cur_driver_info.update({'Driver_name': driver_name})
                 driver_info.append(cur_driver_info)
@@ -69,8 +71,23 @@ class Import_data_class():
                     self.year_start_pos = self.year_match.start()
                     # Cut the string to include everything up to the self.year
                     dob = dob_full_text[:self.year_start_pos+4]  # Include the self.year itself
+
+                    # get month from date example 'maart'
+                    month = re.search(r'[a-zA-Z]+', dob).group(0)
+                    month = self.change_month_to_number(month)
+                    # get day from date
+                    day = re.search(r'\d+', dob).group(0)
+                    # add leading zero to day if needed
+                    if len(day) == 1:
+                        day = '0' + day
+                    # add leading zero to month if needed
+                    if len(str(month)) == 1:
+                        month = '0' + str(month)
+                    # get year from dob
+                    year = re.search(r'\d{4}', dob).group(0)
+                    dob = year + '-' + str(month) + '-' + day
+
                     driver_info[i].update({'Driver_date_of_birth': dob})
-                    driver_info[i].update({'Driver_photo_path': 'media/'+driver_name.replace(' ', '_')+'.jpg'})
         
         return driver_info
 
@@ -79,7 +96,7 @@ class Import_data_class():
         return self.get_driver_dob(names)
 
     def save_driver_info_to_csv(self):
-        df = pd.DataFrame(self.get_driver_info(), columns=['Driver_id', 'Driver_name', 'Driver_date_of_birth', 'Driver_photo_path'])
+        df = pd.DataFrame(self.get_driver_info(), columns=['Driver_id', 'Driver_function', 'Driver_name', 'Driver_date_of_birth'])
         if self.year == 2024:
             file_path = os.path.join(os.getcwd(), 'f1_driver_info_2024.csv')
         else:    
