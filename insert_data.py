@@ -24,16 +24,22 @@ class database_connection():
                 if row[1] == 'Country_name':
                     continue
                 countries.append((row[1],))
+        
+        # remove duplicates
+        countries = list(set(countries))
 
         self.cursor.executemany(query, countries)
         self.mydb.commit()
 
     def insert_GPs(self):
         query = "INSERT INTO GP (land_id, gp_number, circuit_name, location, date, length) VALUES (%s, %s, %s, %s, %s, %s)"
+        
+        # INSERT INTO GP (land_id, gp_number, circuit_name, location, date, length) VALUES (38, '1080', 'Bahrain International Circuit', 'Sakhir', '2023-03-05', '5412')
 
         GPs = []
         GPs_ids = []
 
+        # open GP csv
         with open('f1_GP_info_2023.csv', newline='', encoding='utf-8') as file:
             csv_data = csv.reader(file)
             for row in csv_data:
@@ -41,26 +47,17 @@ class database_connection():
                     continue
                 GPs.append((row[1], row[2], row[3], row[4], row[5], row[6]))
 
-        # print all GPs on new lines
-        #for GP in GPs:
-        #    print(GP)
-
         country_ids = self.get_country_ids()
 
-        # replace all country names with country ids in GPs
+        # replace all country names with country ids and add to GPs_ids
         for GP in GPs:
             for country in country_ids:
                 if GP[0] == country[1]:
                     GP = (country[0],) + GP[1:]
                     GPs_ids.append(GP)
                     break
-        
-        # print all GPs on new lines
-        #for GP in GPs_ids:
-        #    print(GP)
 
-
-        self.cursor.executemany(query, GPs)
+        self.cursor.executemany(query, GPs_ids)
         self.mydb.commit()
 
 

@@ -107,10 +107,40 @@ class Import_data_class():
                 cur_GP_info.update({'GP_circuit': GP_circuit})
                 GP_place = data[3].text.strip() # GP place
                 cur_GP_info.update({'GP_place': GP_place})
-                GP_date = data[4].text.strip()
+                
+                GP_date_string = data[4].text.strip()
+                # get month from date example 'maart'
+                month = re.search(r'[a-zA-Z]+', GP_date_string).group(0)
+                month = self.change_month_to_number(month)
+                # get day from date
+                day = re.search(r'\d+', GP_date_string).group(0)
+                # add leading zero to day if needed
+                if len(day) == 1:
+                    day = '0' + day
+                # add leading zero to month if needed
+                if len(str(month)) == 1:
+                    month = '0' + str(month)
+                GP_date = str(self.year) + '-' + str(month) + '-' + day
                 cur_GP_info.update({'GP_date': GP_date})
                 GP_info.append(cur_GP_info)
         return GP_info
+
+    def change_month_to_number(self, month):
+        case = {
+            'januari': 1,
+            'februari': 2,
+            'maart': 3,
+            'april': 4,
+            'mei': 5,
+            'juni': 6,
+            'juli': 7,
+            'augustus': 8,
+            'september': 9,
+            'oktober': 10,
+            'november': 11,
+            'december': 12
+        }
+        return case.get(month, 'Invalid month')
 
     def get_GP_length(self, GP_info):
         base_url = "https://nl.wikipedia.org/wiki/"
@@ -131,6 +161,10 @@ class Import_data_class():
                 length = th.find_next('td').text.strip()
                 # if length contains [1], remove it
                 length = re.sub(r'\[.*\]', '', length)
+                # if length contains km, remove it
+                length = re.sub(r' km', '', length)
+                # if length contains a comma, remove it
+                length = re.sub(r',', '', length)
                 GP_info[i].update({'GP_length': length})
             else:
                 GP_info[i].update({'GP_length': 'Not found'})
