@@ -274,6 +274,51 @@ class database_connection():
         self.cursor.executemany(query, statuses)
         self.mydb.commit()
 
+    def insert_points_race(self):
+        
+        query = "INSERT INTO points (driver_id, pointsrace_id, gp_id, status_id, pole, fastest_lap) VALUES (%s, %s, %s, %s, %s, %s)" 
+
+        GP_ids = self.get_GP_ids()
+        driver_ids = self.get_driver_ids()
+        status_ids = self.get_status_ids()
+        points_race_ids = self.get_points_race_ids()
+        
+        points = []
+        points_ids = []
+        
+        with open('f1_points_race_2023.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[0] == 'Type_race':
+                    continue
+                points.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
+
+        with open('f1_points_race_2024.csv', newline='', encoding='utf-8') as file:
+            csv_data = csv.reader(file)
+            for row in csv_data:
+                if row[0] == 'Type_race':
+                    continue
+                points.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
+
+        for point in points:
+            driver_id = next((number for number, name in driver_ids if name == point[1]), None)
+            gp_id = next((number for number, name in GP_ids if name == point[4]), None)
+            status_id = next((number for number, name in status_ids if name == point[3]), None)
+            value = point[2]
+            is_null = value.find('Null')
+            if value.find('Null') != -1:
+                points_id = None
+            else:
+                points_id = next((race_id for race_id, position, race_type in points_race_ids if position == int(point[2]) and race_type == point[0]), None)
+            pole_position = point[5]
+            fastest_lap = point[6]
+            points_ids.append((driver_id, points_id, gp_id, status_id, pole_position, fastest_lap,  ))
+
+            
+        self.cursor.executemany(query, points_ids)
+        self.mydb.commit()
+
+
     def get_countries(self):
         query = "SELECT * FROM land"
         self.cursor.execute(query)
@@ -304,7 +349,21 @@ class database_connection():
         self.cursor.execute(query)
         return self.cursor.fetchall()
     
+    def get_status_ids(self):
+        query = "SELECT id, status FROM status"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
     
+    def get_points_race_ids(self):
+        query = "SELECT id, place, racetype FROM points_race"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
+    def get_GP_ids(self):
+        query = "SELECT id, circuit_name FROM GP"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
     def insert_all_data(self):
         self.insert_countries()
         self.insert_GPs()
@@ -316,4 +375,4 @@ class database_connection():
 
 db_con = database_connection()
 
-db_con.insert_all_data()
+db_con.insert_points_race()

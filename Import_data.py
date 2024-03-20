@@ -368,10 +368,15 @@ class Import_data_class():
         
         GP_info = self.get_GP_country()
 
+        races_left = 0
+
+        if self.year == 2024:
+            races_left = len(GP_info) - 2 
+
         points_race = []
         # get GP country name. Use name with underscore for wikipedia search
         base_url = "https://nl.wikipedia.org/wiki/Grand_Prix_Formule_1_van_"
-        for i in range(0, len(GP_info)):
+        for i in range(0, len(GP_info)-races_left):
             
             url = base_url + GP_info[i]['GP_country_id'].replace(' ', '_') + '_' + str(self.year)
             response = requests.get(url)
