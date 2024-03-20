@@ -407,14 +407,17 @@ class Import_data_class():
                     driver = df_sprint.iloc[i, 2]
                     # get position
                     position = df_sprint.iloc[i, 0]
+                    # remove '†' from '13 †'
+                    position = re.sub(r'†', '', position)
+                    position = position.strip()
                     current_points_race.update({'Type_race': 'Sprint'})
                     current_points_race.update({'Driver': driver})
                     # check if position is a number
                     if position.isdigit():
                         current_points_race.update({'Position': position})
-                        current_points_race.update({'Status': 'Null'})
+                        current_points_race.update({'Status': 'Finished'})
                     else:
-                        current_points_race.update({'Position': 'Null'})
+                        current_points_race.update({'Position': None})
                         current_points_race.update({'Status': position})
                     current_points_race.update({'Circuit': circuit_name})
                     current_points_race.update({'Fastest_lap': 'False'})
@@ -431,14 +434,17 @@ class Import_data_class():
                     driver = df_GP.iloc[i, 2]
                     # get position
                     position = df_GP.iloc[i, 0]
+                    # remove '†' from '13 †'
+                    position = re.sub(r'†', '', position)
+                    position = position.strip()
                     current_points_race.update({'Type_race': 'GP'})
                     current_points_race.update({'Driver': driver})
                     # check if position is a number
                     if position.isdigit():
                         current_points_race.update({'Position': position})
-                        current_points_race.update({'Status': 'Null'})
+                        current_points_race.update({'Status': 'Finished'})
                     else:
-                        current_points_race.update({'Position': 'Null'})
+                        current_points_race.update({'Position': None})
                         current_points_race.update({'Status': position})
                     current_points_race.update({'Circuit': circuit_name})
                     if driver == pole_position:

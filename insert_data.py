@@ -277,6 +277,7 @@ class database_connection():
     def insert_points_race(self):
         
         query = "INSERT INTO points (driver_id, pointsrace_id, gp_id, status_id, pole, fastest_lap) VALUES (%s, %s, %s, %s, %s, %s)" 
+        # INSERT INTO points(driver_id, pointsrace_id, gp_id, status_id, pole, fastest_lap) VALUES (23, 1, 1, 'Null', 'True', 'False')
 
         GP_ids = self.get_GP_ids()
         driver_ids = self.get_driver_ids()
@@ -305,16 +306,14 @@ class database_connection():
             gp_id = next((number for number, name in GP_ids if name == point[4]), None)
             status_id = next((number for number, name in status_ids if name == point[3]), None)
             value = point[2]
-            is_null = value.find('Null')
-            if value.find('Null') != -1:
+            if value is "":
                 points_id = None
             else:
                 points_id = next((race_id for race_id, position, race_type in points_race_ids if position == int(point[2]) and race_type == point[0]), None)
             pole_position = point[5]
             fastest_lap = point[6]
             points_ids.append((driver_id, points_id, gp_id, status_id, pole_position, fastest_lap,  ))
-
-            
+ 
         self.cursor.executemany(query, points_ids)
         self.mydb.commit()
 
@@ -375,4 +374,5 @@ class database_connection():
 
 db_con = database_connection()
 
-db_con.insert_points_race()
+db_con.insert_all_data()    
+#db_con.insert_points_race()
