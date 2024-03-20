@@ -381,7 +381,3 @@ class database_connection():
         self.insert_constructors()
         self.insert_constructor_driver()
         self.insert_points_race()
-
-db_con = database_connection()
-
-db_con.insert_all_data()    
