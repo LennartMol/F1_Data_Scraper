@@ -1,11 +1,11 @@
 import Import_data
 
-debug = False
+debug = True
 
 def main():
     if debug:
         data = Import_data.Import_data_class(2023)
-        data.save_country_of_driver_to_csv()
+        data.save_points_race_to_csv()
     else:
         input_year = input("Enter the year for which you want to import data: ")
         data = Import_data.Import_data_class(int(input_year))

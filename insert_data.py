@@ -257,7 +257,22 @@ class database_connection():
             self.cursor.executemany(query, constructor_driver_ids)
             self.mydb.commit()
     
-            
+    def insert_statuses(self):
+
+        query = "INSERT INTO status (status) VALUES (%s)"
+        
+        statuses = [
+            ('NC',),
+            ('DNF',),
+            ('DNQ',),
+            ('DSQ',),
+            ('DNS',),
+            ('EX',),
+            ('WD',),
+        ]
+
+        self.cursor.executemany(query, statuses)
+        self.mydb.commit()
 
     def get_countries(self):
         query = "SELECT * FROM land"

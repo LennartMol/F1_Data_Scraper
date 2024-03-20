@@ -363,3 +363,114 @@ class Import_data_class():
         else:    
             file_path = os.path.join(os.getcwd(), 'f1_country_of_driver_2023.csv')
         df.to_csv(file_path, index=False)
+
+    def get_points_race(self):
+        
+        GP_info = self.get_GP_country()
+
+        points_race = []
+        # get GP country name. Use name with underscore for wikipedia search
+        base_url = "https://nl.wikipedia.org/wiki/Grand_Prix_Formule_1_van_"
+        for i in range(0, len(GP_info)):
+            
+            url = base_url + GP_info[i]['GP_country_id'].replace(' ', '_') + '_' + str(self.year)
+            response = requests.get(url)
+            df = pd.read_html(response.text)
+            df_circuit_name = df[0]
+            row_index = df_circuit_name[df_circuit_name.columns[0]].eq('Circuit').idxmax()
+            circuit_name = df_circuit_name.iloc[row_index, df_circuit_name.columns.get_loc(df_circuit_name.columns[1]) + 1]
+
+            row_index = df_circuit_name[df_circuit_name.columns[0]].eq('Pole position').idxmax()
+            pole_position = df_circuit_name.iloc[row_index + 1, df_circuit_name.columns.get_loc(df_circuit_name.columns[1]) + 1]
+            # remove everything within brackets
+            pole_position = re.sub(r'\([^)]*\)', '', pole_position)
+            pole_position = pole_position.rstrip()
+
+            row_index = df_circuit_name[df_circuit_name.columns[0]].eq('Snelste ronde').idxmax()
+            fastest_lap = df_circuit_name.iloc[row_index + 1, df_circuit_name.columns.get_loc(df_circuit_name.columns[1]) + 1]
+            # remove everything within brackets
+            fastest_lap = re.sub(r'\([^)]*\)', '', fastest_lap)
+            fastest_lap = fastest_lap.rstrip()
+
+
+            df_races = pd.read_html(response.text, match='Rondes')
+            if len(df_races) > 1:
+                df_sprint = df_races[0]
+                df_GP = df_races[1]
+                for i in range(0, len(df_sprint)-1):
+                    current_points_race = {}
+                    # get driver name
+                    driver = df_sprint.iloc[i, 2]
+                    # get position
+                    position = df_sprint.iloc[i, 0]
+                    current_points_race.update({'Type_race': 'Sprint'})
+                    current_points_race.update({'Driver': driver})
+                    # check if position is a number
+                    if position.isdigit():
+                        current_points_race.update({'Position': position})
+                        current_points_race.update({'Status': 'Null'})
+                    else:
+                        current_points_race.update({'Position': 'Null'})
+                        current_points_race.update({'Status': position})
+                    current_points_race.update({'Circuit': circuit_name})
+                    current_points_race.update({'Fastest_lap': 'False'})
+                    current_points_race.update({'Pole_position': 'False'})
+                    points_race.append(current_points_race)
+            
+            
+            else:
+                df_GP = df_races[0]
+             
+            for i in range(0, len(df_GP)-1):
+                    current_points_race = {}
+                    # get driver name
+                    driver = df_GP.iloc[i, 2]
+                    # get position
+                    position = df_GP.iloc[i, 0]
+                    current_points_race.update({'Type_race': 'GP'})
+                    current_points_race.update({'Driver': driver})
+                    # check if position is a number
+                    if position.isdigit():
+                        current_points_race.update({'Position': position})
+                        current_points_race.update({'Status': 'Null'})
+                    else:
+                        current_points_race.update({'Position': 'Null'})
+                        current_points_race.update({'Status': position})
+                    current_points_race.update({'Circuit': circuit_name})
+                    if driver == pole_position:
+                        current_points_race.update({'Pole_position': 'True'})
+                    else:
+                        current_points_race.update({'Pole_position': 'False'})
+                    if driver == fastest_lap:
+                        current_points_race.update({'Fastest_lap': 'True'})
+                    else:
+                        current_points_race.update({'Fastest_lap': 'False'})
+                    points_race.append(current_points_race)
+
+        return points_race
+
+    # {'Type_race': 'GP', 'Driver': 'Max Verstappen', 'Position': '1', 'Status': 'Null', 'Circuit': 'Bahrain International Circuit', 'Pole_position': 'False'}
+    def save_points_race_to_csv(self):
+        df = pd.DataFrame(self.get_points_race(), columns=['Type_race', 'Driver', 'Position', 'Status', 'Circuit', 'Pole_position', 'Fastest_lap'])
+        if self.year == 2024:
+            file_path = os.path.join(os.getcwd(), 'f1_points_race_2024.csv')
+        else:
+            file_path = os.path.join(os.getcwd(), 'f1_points_race_2023.csv')
+        df.to_csv(file_path, index=False)
+    
+
+    def get_GP_country(self):
+        table = self.tables[0]
+        GP_countries = []
+        rows = table.find_all('tr')
+        for row in rows[1:]:  # Skipping the header row
+            cur_GP_info = {}
+            data = row.find_all('td')
+            if data:  # Check if there is data in the row
+                GP_country = data[1].text.strip()  # GP country
+                # remove 'GP van ' from GP_country
+                GP_country = re.sub(r'GP van ', '', GP_country)
+                cur_GP_info.update({'GP_country_id': GP_country})
+                GP_countries.append(cur_GP_info)
+        
+        return GP_countries
