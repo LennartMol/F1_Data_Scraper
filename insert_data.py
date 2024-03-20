@@ -68,6 +68,16 @@ class database_connection():
                     continue
                 GPs.append((row[1], row[2], row[3], row[4], row[5], row[6]))
 
+        # with open('f1_GP_info_2024.csv', newline='', encoding='utf-8') as file:
+        #     csv_data = csv.reader(file)
+        #     for row in csv_data:
+        #         if row[0] == 'GP_id':
+        #             continue
+        #         GPs.append((row[1], row[2], row[3], row[4], row[5], row[6]))
+
+        # # remove duplicates
+        # GPs = list(set(GPs))
+
         country_ids = self.get_country_ids()
 
         # replace all country names with country ids and add to GPs_ids
@@ -317,7 +327,6 @@ class database_connection():
         self.cursor.executemany(query, points_ids)
         self.mydb.commit()
 
-
     def get_countries(self):
         query = "SELECT * FROM land"
         self.cursor.execute(query)
@@ -371,8 +380,8 @@ class database_connection():
         self.insert_driver_countries()
         self.insert_constructors()
         self.insert_constructor_driver()
+        self.insert_points_race()
 
 db_con = database_connection()
 
-#db_con.insert_all_data()    
-db_con.insert_points_race()
+db_con.insert_all_data()    

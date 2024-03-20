@@ -463,7 +463,6 @@ class Import_data_class():
 
         return points_race
 
-    # {'Type_race': 'GP', 'Driver': 'Max Verstappen', 'Position': '1', 'Status': 'Null', 'Circuit': 'Bahrain International Circuit', 'Pole_position': 'False'}
     def save_points_race_to_csv(self):
         df = pd.DataFrame(self.get_points_race(), columns=['Type_race', 'Driver', 'Position', 'Status', 'Circuit', 'Pole_position', 'Fastest_lap'])
         if self.year == 2024:
@@ -472,7 +471,6 @@ class Import_data_class():
             file_path = os.path.join(os.getcwd(), 'f1_points_race_2023.csv')
         df.to_csv(file_path, index=False)
     
-
     def get_GP_country(self):
         table = self.tables[0]
         GP_countries = []

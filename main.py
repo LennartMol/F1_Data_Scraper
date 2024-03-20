@@ -4,8 +4,8 @@ debug = True
 
 def main():
     if debug:
-        data = Import_data.Import_data_class(2023)
-        data.save_points_race_to_csv()
+        data = Import_data.Import_data_class(2024)
+        data.save_GP_info_to_csv()
     else:
         input_year = input("Enter the year for which you want to import data: ")
         data = Import_data.Import_data_class(int(input_year))
