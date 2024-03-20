@@ -1,6 +1,6 @@
 import Import_data
 
-debug = True
+debug = False
 
 def main():
     if debug:

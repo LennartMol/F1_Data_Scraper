@@ -204,7 +204,7 @@ class Import_data_class():
     def get_GP_info(self):
         GP_info = self.get_GP_basic_info()
         GP_info = self.get_GP_length(GP_info)
-        return self.get_GP_country(GP_info)
+        return self.get_GP_country()
 
     def save_GP_info_to_csv(self):
         df = pd.DataFrame(self.get_GP_info(), columns=['GP_id', 'GP_country_id', 'GP_nr', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
