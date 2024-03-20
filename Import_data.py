@@ -383,6 +383,10 @@ class Import_data_class():
             df_circuit_name = df[0]
             row_index = df_circuit_name[df_circuit_name.columns[0]].eq('Circuit').idxmax()
             circuit_name = df_circuit_name.iloc[row_index, df_circuit_name.columns.get_loc(df_circuit_name.columns[1]) + 1]
+            if circuit_name == 'Autodromo Nazionale Monza':
+                circuit_name = 'Autodromo Nazionale di Monza'
+            elif circuit_name == 'Circuit of the Americas':
+                circuit_name = 'Circuit of The Americas'
 
             row_index = df_circuit_name[df_circuit_name.columns[0]].eq('Pole position').idxmax()
             pole_position = df_circuit_name.iloc[row_index + 1, df_circuit_name.columns.get_loc(df_circuit_name.columns[1]) + 1]
@@ -417,11 +421,11 @@ class Import_data_class():
                         current_points_race.update({'Position': position})
                         current_points_race.update({'Status': 'Finished'})
                     else:
-                        current_points_race.update({'Position': None})
+                        current_points_race.update({'Position': 0})
                         current_points_race.update({'Status': position})
                     current_points_race.update({'Circuit': circuit_name})
-                    current_points_race.update({'Fastest_lap': 'False'})
-                    current_points_race.update({'Pole_position': 'False'})
+                    current_points_race.update({'Fastest_lap': False})
+                    current_points_race.update({'Pole_position': False})
                     points_race.append(current_points_race)
             
             
@@ -444,17 +448,17 @@ class Import_data_class():
                         current_points_race.update({'Position': position})
                         current_points_race.update({'Status': 'Finished'})
                     else:
-                        current_points_race.update({'Position': None})
+                        current_points_race.update({'Position': 0})
                         current_points_race.update({'Status': position})
                     current_points_race.update({'Circuit': circuit_name})
                     if driver == pole_position:
-                        current_points_race.update({'Pole_position': 'True'})
+                        current_points_race.update({'Pole_position': True})
                     else:
-                        current_points_race.update({'Pole_position': 'False'})
+                        current_points_race.update({'Pole_position': False})
                     if driver == fastest_lap:
-                        current_points_race.update({'Fastest_lap': 'True'})
+                        current_points_race.update({'Fastest_lap': True})
                     else:
-                        current_points_race.update({'Fastest_lap': 'False'})
+                        current_points_race.update({'Fastest_lap': False})
                     points_race.append(current_points_race)
 
         return points_race
