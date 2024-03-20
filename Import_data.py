@@ -184,6 +184,17 @@ class Import_data_class():
                 GP_info[i].update({'GP_length': length})
             else:
                 GP_info[i].update({'GP_length': 'Not found'})
+
+        # get GP country name. Use name with underscore for wikipedia search
+        base_url = "https://nl.wikipedia.org/wiki/Grand_Prix_Formule_1_van_"
+        for i in range(0, len(GP_info)):
+            url = base_url + GP_info[i]['GP_country_id'].replace(' ', '_')
+            response = requests.get(url)
+            df = pd.read_html(response.text, match='Land')[0]
+            row_index = df[df.columns[0]].eq('Land').idxmax()
+            value_in_next_column = df.iloc[row_index, df.columns.get_loc(df.columns[1]) + 1]
+            GP_info[i].update({'GP_country_id': value_in_next_column})
+        
         return GP_info
         
     def get_GP_country(self, GP_info):
@@ -196,15 +207,12 @@ class Import_data_class():
             row_index = df[df.columns[0]].eq('Land').idxmax()
             value_in_next_column = df.iloc[row_index, df.columns.get_loc(df.columns[1]) + 1]
             GP_info[i].update({'GP_country_id': value_in_next_column})
-
-            # for now all countries_IDs are not set yet
-            #GP_info[i].update({'GP_country_id': 'Not set yet'})
         return GP_info
 
     def get_GP_info(self):
         GP_info = self.get_GP_basic_info()
         GP_info = self.get_GP_length(GP_info)
-        return self.get_GP_country()
+        return GP_info
 
     def save_GP_info_to_csv(self):
         df = pd.DataFrame(self.get_GP_info(), columns=['GP_id', 'GP_country_id', 'GP_nr', 'GP_circuit', 'GP_place', 'GP_date', 'GP_length'])
