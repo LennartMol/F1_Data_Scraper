@@ -26,6 +26,7 @@ def main():
                 data.save_GP_info_to_csv()
                 data.save_country_info_to_csv()
                 data.save_country_of_driver_to_csv()
+                data.save_points_race_to_csv()
             elif(user_input == "5"):
                 input_year = input("Enter the year for which you want to import data: ")
                 data.change_year(int(input_year))

@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import re
 import os
-import math
 
 class Import_data_class():
 
