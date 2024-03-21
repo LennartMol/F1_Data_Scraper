@@ -408,6 +408,22 @@ class Import_data_class():
             fastest_lap = re.sub(r'\([^)]*\)', '', fastest_lap)
             fastest_lap = fastest_lap.rstrip()
 
+            row_index = df_circuit_name[df_circuit_name.columns[0]].eq('Racedag').idxmax()
+            date = df_circuit_name.iloc[row_index, df_circuit_name.columns.get_loc(df_circuit_name.columns[1]) + 1]
+            # convert to right date format: YYYY-MM-DD
+            # get month from date example 'maart'
+            month = re.search(r'[a-zA-Z]+', date).group(0)
+            month = self.change_month_to_number(month)
+            # get day from date
+            day = re.search(r'\d+', date).group(0)
+            # add leading zero to day if needed
+            if len(day) == 1:
+                day = '0' + day
+            # add leading zero to month if needed
+            if len(str(month)) == 1:
+                month = '0' + str(month)
+            GP_date = str(self.year) + '-' + str(month) + '-' + day
+
 
             df_races = pd.read_html(response.text, match='Rondes')
             if len(df_races) > 1:
@@ -432,6 +448,7 @@ class Import_data_class():
                         current_points_race.update({'Position': 0})
                         current_points_race.update({'Status': position})
                     current_points_race.update({'Circuit': circuit_name})
+                    current_points_race.update({'Date': GP_date})
                     current_points_race.update({'Fastest_lap': False})
                     current_points_race.update({'Pole_position': False})
                     points_race.append(current_points_race)
@@ -459,6 +476,7 @@ class Import_data_class():
                         current_points_race.update({'Position': 0})
                         current_points_race.update({'Status': position})
                     current_points_race.update({'Circuit': circuit_name})
+                    current_points_race.update({'Date': GP_date})
                     if driver == pole_position:
                         current_points_race.update({'Pole_position': True})
                     else:
@@ -472,7 +490,7 @@ class Import_data_class():
         return points_race
 
     def save_points_race_to_csv(self):
-        df = pd.DataFrame(self.get_points_race(), columns=['Type_race', 'Driver', 'Position', 'Status', 'Circuit', 'Pole_position', 'Fastest_lap'])
+        df = pd.DataFrame(self.get_points_race(), columns=['Type_race', 'Driver', 'Position', 'Status', 'Circuit', 'Date', 'Pole_position', 'Fastest_lap'])
         if self.year == 2024:
             file_path = os.path.join(os.getcwd(), 'f1_points_race_2024.csv')
         else:
