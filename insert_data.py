@@ -1,6 +1,8 @@
 import mysql.connector
 import Import_data
 import csv
+import image
+import os
 
 
 class database_connection():
@@ -14,7 +16,7 @@ class database_connection():
         self.cursor = self.mydb.cursor()
 
     def insert_countries(self):
-        query = "INSERT INTO land (name) VALUES (%s)"
+        query = "INSERT INTO land (name, flag) VALUES (%s, %s)"
 
         countries = []
 
@@ -48,6 +50,18 @@ class database_connection():
 
         # remove duplicates
         countries = list(set(countries))
+
+        # open photos of countries from local file 'Landen' 
+        directory = 'Landen'
+        for filename in os.listdir(directory):
+            if filename.endswith(".png"):
+                country = filename[:-4]
+                # get matching country index in countries list
+                index = next((i for i, name in enumerate(countries) if name[0] == country), None)
+                # open the image
+                img_data = open(directory + '/' + filename, 'rb').read()
+                # append img_data to the country tuple
+                countries[index] = countries[index] + (img_data,)
 
         self.cursor.executemany(query, countries)
         self.mydb.commit()

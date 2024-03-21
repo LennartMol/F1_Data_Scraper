@@ -1,12 +1,12 @@
 import Import_data
 import insert_data
 
-debug = False
+debug = True
 
 def main():
     if debug:
         insert= insert_data.database_connection()
-        insert.insert_points_race()
+        insert.insert_countries()
     else:
         input_choice = input("Do you want to create CSVs or insert data into database? \nType CSVs[0] or insert[1]: ")
 
