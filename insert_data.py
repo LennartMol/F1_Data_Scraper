@@ -117,7 +117,7 @@ class database_connection():
         self.mydb.commit()
 
     def insert_drivers_info(self):
-        query = "INSERT INTO driver (function_id, name, dateofbirth) VALUES (%s, %s, %s)"
+        query = "INSERT INTO driver (function_id, name, dateofbirth, photo) VALUES (%s, %s, %s, %s)"
 
         drivers = []
         drivers_ids = []
@@ -139,6 +139,10 @@ class database_connection():
         # remove duplicates
         drivers = list(set(drivers))
 
+        # remove entry which has  'Driver_function' as name
+        drivers = [driver for driver in drivers if driver[0] != 'Driver_function']
+        
+
         function_ids = self.get_function_ids()
 
         for driver in drivers:
@@ -147,6 +151,18 @@ class database_connection():
                     driver = (function[0],) + driver[1:]
                     drivers_ids.append(driver)
                     break
+
+        # open photos of drivers from local file 'Coureurs'
+        directory = 'Coureurs'
+        for filename in os.listdir(directory):
+            if filename.endswith(".jpg"):
+                driver = filename[:-4]
+                # get matching driver index in drivers list
+                index = next((i for i, name in enumerate(drivers) if name[1] == driver), None)
+                # open the image
+                img_data = open(directory + '/' + filename, 'rb').read()
+                # append img_data to the driver tuple
+                drivers_ids[index] = drivers_ids[index] + (img_data,)
         
         self.cursor.executemany(query, drivers_ids)
         self.mydb.commit()
