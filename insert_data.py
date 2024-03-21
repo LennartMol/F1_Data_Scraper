@@ -323,8 +323,15 @@ class database_connection():
                 points_id = None
             else:
                 points_id = next((race_id for race_id, position, race_type in points_race_ids if position == int(point[2]) and race_type == point[0]), None)
-            pole_position = point[6]
-            fastest_lap = point[7]
+            # convert 'True' and 'False' to 1 and 0
+            if point[6] == 'True':
+                pole_position = 1
+            else:
+                pole_position = 0
+            if point[7] == 'True':
+                fastest_lap = 1
+            else:
+                fastest_lap = 0
             points_ids.append((driver_id, points_id, gp_id, status_id, pole_position, fastest_lap,  ))
  
         self.cursor.executemany(query, points_ids)
