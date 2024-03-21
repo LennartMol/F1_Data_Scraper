@@ -289,7 +289,9 @@ class database_connection():
         query = "INSERT INTO points (driver_id, pointsrace_id, gp_id, status_id, pole, fastest_lap) VALUES (%s, %s, %s, %s, %s, %s)" 
         #INSERT INTO points (driver_id, pointsrace_id, gp_id, status_id, pole, fastest_lap) VALUES (23, 13, 1, 1, 'False', 'False')
         
-        GP_ids = self.get_GP_ids()
+        GP_ids = self.get_GP_ids_and_dates()
+        # convert datetime object to string in correct format for comparison: YYYY-MM-DD
+        GP_ids = [(id, name, date.strftime('%Y-%m-%d')) for id, name, date in GP_ids]
         driver_ids = self.get_driver_ids()
         status_ids = self.get_status_ids()
         points_race_ids = self.get_points_race_ids()
@@ -302,26 +304,27 @@ class database_connection():
             for row in csv_data:
                 if row[0] == 'Type_race':
                     continue
-                points.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
+                points.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
 
         with open('f1_points_race_2024.csv', newline='', encoding='utf-8') as file:
             csv_data = csv.reader(file)
             for row in csv_data:
                 if row[0] == 'Type_race':
                     continue
-                points.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
+                points.append((row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
 
         for point in points:
             driver_id = next((number for number, name in driver_ids if name == point[1]), None)
-            gp_id = next((number for number, name in GP_ids if name == point[4]), None)
+            # match GP_id with the correct date and the correct name
+            gp_id = next((number for number, name, date in GP_ids if name == point[4] and date == point[5]), None)
             status_id = next((number for number, name in status_ids if name == point[3]), None)
             value = point[2]
             if value == '0' or value == '':
                 points_id = None
             else:
                 points_id = next((race_id for race_id, position, race_type in points_race_ids if position == int(point[2]) and race_type == point[0]), None)
-            pole_position = point[5]
-            fastest_lap = point[6]
+            pole_position = point[6]
+            fastest_lap = point[7]
             points_ids.append((driver_id, points_id, gp_id, status_id, pole_position, fastest_lap,  ))
  
         self.cursor.executemany(query, points_ids)
@@ -367,8 +370,8 @@ class database_connection():
         self.cursor.execute(query)
         return self.cursor.fetchall()
     
-    def get_GP_ids(self):
-        query = "SELECT id, circuit_name FROM GP"
+    def get_GP_ids_and_dates(self):
+        query = "SELECT id, circuit_name, date FROM GP"
         self.cursor.execute(query)
         return self.cursor.fetchall()
 

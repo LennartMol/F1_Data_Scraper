@@ -5,8 +5,8 @@ debug = False
 
 def main():
     if debug:
-        data = Import_data.Import_data_class(2023)
-        data.save_points_race_to_csv()
+        insert= insert_data.database_connection()
+        insert.insert_points_race()
     else:
         input_choice = input("Do you want to create CSVs or insert data into database? \nType CSVs[0] or insert[1]: ")
 
